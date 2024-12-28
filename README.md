@@ -110,3 +110,6 @@ systemctl enable scanpi --now
 ## Tested Hardware
 
 [Fujitsu/RICOH SnapScan S1500](https://www.pfu.ricoh.com/global/scanners/scansnap/discontinued/s1500/s1500.html)
+# Updated to Work with my Flatbed
+Samsung Multi Printer/Scanner
+

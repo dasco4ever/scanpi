@@ -1,3 +1,4 @@
+#app.py
 from flask import Flask, render_template, request, redirect, url_for
 import subprocess
 import datetime as dt
@@ -5,9 +6,9 @@ import os
 
 DEBUG = os.environ.get("DEBUG", False)
 ROOT_PATH = os.environ.get("ROOT_PATH", '/')
-SOURCES = os.environ.get("SOURCES", "ADF Front,ADF Back,ADF Duplex").split(",")
-MODES = os.environ.get("MODES", "Lineart,Halftone,Gray,Color").split(",")
-RESOLUTIONS = os.environ.get("RESOLUTIONS", "50,100,150,200,250,300,350,400,450,500,550,600").split(",")
+SOURCES = os.environ.get("SOURCES", "Flat").split(",")
+MODES = os.environ.get("MODES", "Color,,Gray").split(",")
+RESOLUTIONS = os.environ.get("RESOLUTIONS", "300,200,100,600").split(",")
 DATE_FORMAT = os.environ.get("DATE_FORMAT", "%Y-%m-%d-%H-%M-%S")
 
 app = Flask(__name__)
@@ -35,8 +36,8 @@ def render_root_path(default_date, message=""):
     Returns:
         str: The rendered template
     """
-    return render_template('form.html', 
-        default_date=default_date, 
+    return render_template('form.html',
+        default_date=default_date,
         resolutions=RESOLUTIONS,
         sources=SOURCES,
         modes=MODES,
@@ -64,7 +65,7 @@ def root_path():
             env_vars["MODE"] = mode
             env_vars["RESOLUTION"] = resolution
             env_vars["SOURCE"] = source
-            
+
             # Call the scan_adf.sh script with the provided arguments
             subprocess.Popen(['/bin/bash','scan_adf.sh'], env=env_vars)
             return render_root_path(default_date, message='Scan request submitted successfully!')
